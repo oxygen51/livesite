@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Portfolio{% endblock title %}
+
+{% block main-content %}
+  <!-- container -->
+  <div class="container-fluid">
+    <!-- row -->
+    <div class="row p-30-0">
+      
+      <!-- col -->
+      <div class="col-lg-6">
+        <!-- section title -->
+        <div class="art-section-title">
+          <div class="art-title-frame">
+            <h4>Education</h4>
+          </div>
+        </div>
+        
+        <!-- timeline -->
+        <div class="art-timeline art-gallery">
+          {% for item in education_data %}
+          <div class="art-timeline-item">
+            <div class="art-timeline-mark-light"></div>
+            <div class="art-timeline-mark"></div>
+            <div class="art-a art-timeline-content">
+              <div class="art-card-header">
+                <div class="art-left-side">
+                  <h5>{{ item.title }}</h5>
+                  <div class="art-el-suptitle mb-15">{{ item.designation }}</div>
+                </div>
+                <div class="art-right-side">
+                  <span class="art-date">{{ item.session }}</span>
+                </div>
+              </div>
+              <p>{{ item.description }}</p>
+              {% if item.link %}
+                <a href="{{ item.link }}" class="art-link art-color-link art-w-chevron" target="_blank">Recommendation</a>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      
+      <!-- col -->
+      <div class="col-lg-6">
+        <!-- section title -->
+        <div class="art-section-title">
+          <div class="art-title-frame">
+            <h4>Work History</h4>
+          </div>
+        </div>
+        
+        <!-- timeline -->
+        <div class="art-timeline">
+          {% for item in work_history_data %}
+          <div class="art-timeline-item">
+            <div class="art-timeline-mark-light"></div>
+            <div class="art-timeline-mark"></div>
+            <div class="art-a art-timeline-content">
+              <div class="art-card-header">
+                <div class="art-left-side">
+                  <h5>{{ item.title }}</h5>
+                  <div class="art-el-suptitle mb-15">{{ item.designation }}</div>
+                </div>
+                <div class="art-right-side">
+                  <span class="art-date">{{ item.session }}</span>
+                </div>
+              </div>
+              <p>{{ item.description }}</p>
+              {% if item.link %}
+                <a href="{{ item.link }}" class="art-link art-color-link art-w-chevron" target="_blank">Recommendation</a>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% endblock main-content %}

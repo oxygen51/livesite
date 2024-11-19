@@ -1,0 +1,323 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Portfolio{% endblock title %}
+{% block main-content %}
+{% load custom_tags %}
+
+
+  <!-- container -->
+  <div class="container-fluid">
+
+    <!-- row -->
+    <div class="row p-60-0 p-lg-30-0 p-md-15-0">
+      <!-- col -->
+      <div class="col-lg-12">
+
+        <!-- banner -->
+        <div class="art-a art-banner" style="background-image: url('{% if banner.image %}{{ banner.image.url }}{% else %}{% static 'img/bg.jpg' %}{% endif %}')">
+          <!-- banner back -->
+          <div class="art-banner-back"></div>
+          <!-- banner dec -->
+          <div class="art-banner-dec"></div>
+          <!-- banner overlay -->
+          <div class="art-banner-overlay">
+            <!-- main title -->
+            <div class="art-banner-title">
+              <!-- title -->
+              <h1 class="mb-15">{{ banner.title_part1 }} <br>{{ banner.title_part2 }}
+              <!-- suptitle -->
+              <div class="art-lg-text art-code mb-25" style='margin-top: 20px' >&lt;<i>code</i>&gt; I build <span class="txt-rotate" data-period="2000"
+                  data-rotate='{{ banner.rotating_text|safe }}'></span>&lt;/<i>code</i>&gt;</div>
+              <div class="art-buttons-frame">
+                <!-- button -->
+                <a href="{% url 'project' %}" class="art-btn art-btn-md"><span>Explore now</span></a>
+              </div>
+            </div>
+            <!-- main title end -->
+            <!-- photo -->
+            <!-- Dynamic Banner Photo -->
+            {% if banner.banner_photo %}
+              <img src="{{ banner.banner_photo.url }}" class="art-banner-photo" alt="Your Name">
+            {% else %}
+              <img src="{% static 'img/face-2.png' %}" class="art-banner-photo" alt="Your Name">
+            {% endif %}
+          </div>
+          <!-- banner overlay end -->
+        </div>
+        <!-- banner end -->
+
+      </div>
+      <!-- col end -->
+    </div>
+    <!-- row end -->
+
+  </div>
+  <!-- container end -->
+
+  <!-- container -->
+  <div class="container-fluid">
+
+    <!-- Counters -->
+    <div class="row p-30-0">
+      <!-- Years Experience -->
+      <div class="col-md-3 col-6">
+        <div class="art-counter-frame">
+          <div class="art-counter-box">
+            <span class="art-counter">{{ counter_data.years_experience }}</span>
+            {% if counter_data.years_suffix %}
+              <span class="art-counter-plus">{{ counter_data.years_suffix }}</span>
+            {% endif %}
+          </div>
+          <h6>Years Experience</h6>
+        </div>
+      </div>
+      
+      <!-- Completed Projects -->
+      <div class="col-md-3 col-6">
+        <div class="art-counter-frame">
+          <div class="art-counter-box">
+            <span class="art-counter">{{ counter_data.completed_projects }}</span>
+            {% if counter_data.projects_suffix %}
+              <span class="art-counter-plus">{{ counter_data.projects_suffix }}</span>
+            {% endif %}
+          </div>
+          <h6>Completed Projects</h6>
+        </div>
+      </div>
+      
+      <!-- Happy Customers -->
+      <div class="col-md-3 col-6">
+        <div class="art-counter-frame">
+          <div class="art-counter-box">
+            <span class="art-counter">{{ counter_data.happy_customers }}</span>
+            {% if counter_data.customers_suffix %}
+              <span class="art-counter-plus">{{ counter_data.customers_suffix }}</span>
+            {% endif %}
+          </div>
+          <h6>Happy Customers</h6>
+        </div>
+      </div>
+      
+      <!-- Honors and Awards -->
+      <div class="col-md-3 col-6">
+        <div class="art-counter-frame">
+          <div class="art-counter-box">
+            <span class="art-counter">{{ counter_data.honors_awards }}</span>
+            {% if counter_data.honors_suffix %}
+              <span class="art-counter-plus">{{ counter_data.honors_suffix }}</span>
+            {% endif %}
+          </div>
+          <h6>Honors and Awards</h6>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- container end -->
+
+  <!-- container -->
+  <div class="container-fluid">
+
+    <!-- row -->
+    <div class="row">
+
+      <!-- col -->
+      <div class="col-lg-12">
+
+        <!-- section title -->
+        <div class="art-section-title">
+          <!-- title frame -->
+          <div class="art-title-frame">
+            <!-- title -->
+            <h4>My Services</h4>
+          </div>
+          <!-- title frame end -->
+        </div>
+        <!-- section title end -->
+
+      </div>
+      <!-- col end -->
+
+      <!-- col -->
+      {% for service in services %}
+        <div class="col-lg-4 col-md-6">
+          <div class="art-a art-service-icon-box">
+            <div class="art-service-ib-content">
+              <h5 class="mb-15">{{ service.title }}</h5>
+              <div class="mb-15">{{ service.description }}</div>
+              <div class="art-buttons-frame">
+                <a href="{% url 'contact' %}" class="art-link art-color-link art-w-chevron">Order now</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+      <!-- col end -->
+
+    </div>
+    <!-- row end -->
+
+  </div>
+  <!-- container end -->
+
+  <!-- Price Plans Section -->
+  <div class="container-fluid">
+    <div class="row p-0-0">
+
+      <!-- Section Title -->
+      <div class="col-lg-12">
+        <div class="art-section-title">
+          <div class="art-title-frame">
+            <h4>Price Plans</h4>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dynamic Pricing Plans -->
+      {% for plan in pricing_plans %}
+        <div class="col-lg-4">
+          <div class="art-a art-price {% if plan.popular %}art-popular-price{% endif %}">
+            <div class="art-price-body">
+              <h5 class="mb-30">{{ plan.title }}</h5>
+              <div class="art-price-cost">
+                <div class="art-number">
+                  {% if plan.price.isdigit %}<span>$</span>{% endif %}{{ plan.price }}{% if plan.duration %}<span>{{ plan.duration }}</span>{% endif %}
+                </div>                                
+              </div>
+              <ul class="art-price-list">
+                {% for feature in plan.features %}
+                  <li class="{% if not feature.available %}art-empty-item{% endif %}">
+                    {{ feature.feature }}
+                  </li>
+                {% endfor %}
+              </ul>
+              <a href="{% url 'contact' %}" class="art-link art-color-link art-w-chevron">Order now</a>
+              {% if plan.note %}
+                <div class="art-asterisk"><sup>*</sup>{{ plan.note }}</div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+
+    </div>
+  </div>
+
+
+  <!-- container -->
+  <div class="container-fluid">
+
+    <!-- row -->
+    <div class="row">
+
+      <!-- col -->
+      <div class="col-lg-12">
+
+        <!-- section title -->
+        <div class="art-section-title">
+          <!-- title frame -->
+          <div class="art-title-frame">
+            <!-- title -->
+            <h4>Recommendations</h4>
+          </div>
+          <!-- title frame end -->
+        </div>
+        <!-- section title end -->
+
+      </div>
+      <!-- col end -->
+
+      <!-- col -->
+      <!-- Testimonials Section -->
+      <div class="col-lg-12">
+        <div class="swiper-container art-testimonial-slider" style="overflow: visible">
+          <div class="swiper-wrapper">
+            {% for testimonial in testimonials %}
+              <div class="swiper-slide">
+                <div class="art-a art-testimonial">
+                  <div class="testimonial-body">
+                    <!-- Photo -->
+                    {% if testimonial.photo %}
+                      <img class="art-testimonial-face" src="{{ testimonial.photo.url }}" alt="{{ testimonial.name }}">
+                    {% else %}
+                      <img class="art-testimonial-face" src="{% static 'img/testimonials/default.jpg' %}" alt="{{ testimonial.name }}">
+                    {% endif %}
+                    <!-- Name -->
+                    <h5>{{ testimonial.name }}</h5>
+                    <div class="art-el-suptitle mb-15">{{ testimonial.designation }}</div>
+                    <!-- Description -->
+                    <div class="mb-15">{{ testimonial.description }}</div>
+                  </div>
+                  <div class="art-testimonial-footer">
+                    <div class="art-left-side">
+                      <!-- Star Rating -->
+                      <ul class="art-star-rate">
+                        <!-- Filled Stars -->
+                        {% for _ in testimonial.star_rating|range_filter %}
+                          <li><i class="fas fa-star"></i></li> <!-- Filled star -->
+                        {% endfor %}
+                      
+                        <!-- Empty Stars -->
+                        {% calculate_empty_stars testimonial.star_rating as empty_stars %}
+                        {% for _ in empty_stars %}
+                          <li class="art-empty-item"><i class="fas fa-star"></i></li> <!-- Empty star -->
+                        {% endfor %}
+                      </ul>                                            
+                    </div>
+                    <div class="art-right-side"></div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+
+      <!-- col end -->
+
+      <!-- col -->
+      <div class="col-lg-12">
+
+        <!-- slider navigation -->
+        <div class="art-slider-navigation">
+
+          <!-- left side -->
+          <div class="art-sn-left">
+
+            <!-- slider pagination -->
+            <div class="swiper-pagination"></div>
+
+          </div>
+          <!-- left side end -->
+
+          <!-- right side -->
+          <div class="art-sn-right">
+
+            <!-- slider navigation -->
+            <div class="art-slider-nav-frame">
+              <!-- prev -->
+              <div class="art-slider-nav art-testi-swiper-prev"><i class="fas fa-chevron-left"></i></div>
+              <!-- next -->
+              <div class="art-slider-nav art-testi-swiper-next"><i class="fas fa-chevron-right"></i></div>
+            </div>
+            <!-- slider navigation -->
+
+          </div>
+          <!-- right side end -->
+
+        </div>
+        <!-- slider navigation end -->
+
+      </div>
+      <!-- col end -->
+
+    </div>
+    <!-- row end -->
+
+  </div>
+  <!-- container end -->
+
+
+
+{% endblock main-content %}

@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Portfolio{% endblock title %}
+{% block main-content %}
+
+<style>
+    .art-active-pag {
+        font-weight: bold;
+        color: #FFC107;
+    }
+</style>
+
+<!-- Container -->
+<div class="container-fluid">
+    <!-- Row -->
+    <div class="row p-30-0">
+        <!-- Column -->
+        <div class="col-lg-12">
+            <!-- Filter -->
+            <div class="art-filter mb-30" id="filters">
+                <!-- Filter for all categories -->
+                <a href="#" data-filter="*" class="art-link art-current">All Categories</a>
+                <!-- Loop through categories -->
+                {% for category in categories %}
+                    <a href="#" data-filter=".{{ category.name|lower }}" class="art-link">{{ category.name }}</a>
+                {% endfor %}
+            </div>
+            <!-- Filter end -->
+        </div>
+        <!-- Column end -->
+
+        <!-- Portfolio Grid -->
+        <div class="art-grid art-grid-3-col art-gallery" id="portfolio-grid">
+            <!-- Loop through portfolio items -->
+            {% for item in page_obj %}
+                <div class="art-grid-item {{ item.category.name|lower }}">
+                    <!-- Grid item frame -->
+                    <a data-fancybox="gallery" data-src="{{ item.image.url }}" 
+                       class="art-a art-portfolio-item-frame art-square" style="cursor: pointer;">
+                        <!-- Image -->
+                        <img src="{{ item.image.url }}" alt="{{ item.title }}">
+                        <!-- Zoom icon -->
+                        <span class="art-item-hover"><i class="fas fa-expand"></i></span>
+                    </a>
+                    <!-- Grid item frame end -->
+
+                    <!-- Description -->
+                    <div class="art-item-description">
+                        <!-- Title -->
+                        <h5 class="mb-15">{{ item.title }}</h5>
+                        <!-- Description -->
+                        <div class="mb-15">{{ item.description }}</div>
+                        <!-- External link button -->
+                        {% if item.external_link %}
+                            <a href="{{ item.external_link }}" 
+                               class="art-link art-color-link art-w-chevron" 
+                               target="_blank">Read more</a>
+                        {% endif %}
+                    </div>
+                    <!-- Description end -->
+                </div>
+            {% endfor %}
+        </div>
+        <!-- Portfolio Grid end -->
+    </div>
+    <!-- Row end -->
+</div>
+<!-- Container end -->
+
+<!-- Pagination -->
+<div class="art-a art-pagination" style='margin-bottom: 30px;'>
+    <!-- Previous button -->
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}" class="art-link art-color-link art-w-chevron art-left-link">
+            <span>Previous page</span>
+        </a>
+    {% else %}
+        <span class="art-link art-color-link art-w-chevron art-left-link disabled">
+            <span>Previous page</span>
+        </span>
+    {% endif %}
+
+    <!-- Page numbers -->
+    <div class="art-pagination-center art-m-hidden">
+        {% for num in pagination_range %}
+            {% if num == page_obj.number %}
+                <!-- Highlight active page -->
+                <span class="art-active-pag art-link" style="font-weight: bold; color: yellow;">{{ num }}</span>
+            {% elif num == "..." %}
+                <!-- Ellipsis for skipped pages -->
+                <span class="art-link disabled">{{ num }}</span>
+            {% else %}
+                <a href="?page={{ num }}" class="art-link">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <!-- Next button -->
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" class="art-link art-color-link art-w-chevron">
+            <span>Next page</span>
+        </a>
+    {% else %}
+        <span class="art-link art-color-link art-w-chevron disabled">
+            <span>Next page</span>
+        </span>
+    {% endif %}
+</div>
+
+{% endblock main-content %}

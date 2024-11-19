@@ -1,0 +1,480 @@
+<!doctype html>
+{% load static %}
+<html lang="zxx">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- color of address bar in mobile browser -->
+  <meta name="theme-color" content="#2B2B35">
+  <!-- favicon  -->
+  <link rel="shortcut icon" href="img/thumbnail.ico" type="image/x-icon">
+  <!-- bootstrap css -->
+  <link rel="stylesheet" href="{% static 'css/plugins/bootstrap.min.css' %}">
+  <!-- font awesome css -->
+  <link rel="stylesheet" href="{% static 'css/plugins/font-awesome.min.css' %}">
+  <!-- swiper css -->
+  <link rel="stylesheet" href="{% static 'css/plugins/swiper.min.css' %}">
+  <!-- fancybox css -->
+  <link rel="stylesheet" href="{% static 'css/plugins/fancybox.min.css' %}">
+  <!-- main css -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <title>Arter</title>
+</head>
+
+<body>
+
+  <!-- app -->
+  <div class="art-app">
+
+    <!-- mobile top bar -->
+    <div class="art-mobile-top-bar"></div>
+
+    <!-- app wrapper -->
+    <div class="art-app-wrapper">
+
+      <!-- app container end -->
+      <div class="art-app-container">
+
+        <!-- info bar -->
+        <div class="art-info-bar">
+
+          <!-- menu bar frame -->
+          <div class="art-info-bar-frame">
+
+            <!-- info bar header -->
+            <div class="art-info-bar-header">
+              <!-- info bar button -->
+              <a class="art-info-bar-btn" href="#.">
+                <!-- icon -->
+                <i class="fas fa-ellipsis-v"></i>
+              </a>
+              <!-- info bar button end -->
+            </div>
+            <!-- info bar header end -->
+
+            <!-- info bar header -->
+            <div class="art-header">
+              <!-- avatar -->
+              <div class="art-avatar">
+                {% if personal_info.profile_image %}
+                  <a data-fancybox="avatar" data-src="{{ personal_info.profile_image.url }}" class="art-avatar-curtain" style="cursor: pointer;">
+                    <img src="{{ personal_info.profile_image.url }}" alt="avatar">
+                    <i class="fas fa-expand"></i>
+                  </a>
+                {% else %}
+                  <p>No image available.</p>
+                {% endif %}
+                <!-- available -->
+                <div class="art-lamp-light">
+                  <!-- add class 'art-not-available' if not available-->
+                  <div class="art-available-lamp"></div>
+                </div>
+              </div>
+              <!-- avatar end -->
+              <!-- name -->
+              <h5 class="art-name mb-10"><a href="{% url 'home' %}">{{ personal_info.name }}</a></h5>
+              <!-- post -->
+              <div class="art-sm-text">{{ personal_info.thum_designation_1 }} <br>{{ personal_info.thum_designation_2 }} </div>
+            </div>
+            <!-- info bar header end -->
+
+            <!-- scroll frame -->
+            <div id="scrollbar2" class="art-scroll-frame">
+
+              <!-- info bar about -->
+              <div class="art-table p-15-15">
+                <!-- about text -->
+                <ul>
+                  <!-- country -->
+                  <li>
+                    <h6>Residence:</h6><span>{{ personal_info.residence }}</span>
+                  </li>
+                  <!-- city -->
+                  <li>
+                    <h6>City:</h6><span>{{ personal_info.city }}</span>
+                  </li>
+                  <!-- age -->
+                  <li>
+                    <h6>Age:</h6><span>{{ personal_info.dynamic_age }}</span>
+                  </li>
+                </ul>
+              </div>
+              <!-- info bar about end -->
+
+              <!-- divider -->
+              <div class="art-ls-divider"></div>
+
+              <!-- language skills -->
+              <!-- Language Skills -->
+              <div class="art-lang-skills p-30-15">
+                {% for skill in language_skills %}
+                  <!-- skill -->
+                  <div class="art-lang-skills-item">
+                    <div id="circleprog{{ forloop.counter }}" class="art-cirkle-progress"></div>
+                    <!-- title -->
+                    <h6>{{ skill.language_name }}</h6>
+                  </div>
+                  <!-- skill end -->
+                {% endfor %}
+              </div>
+              <!-- Language Skills End -->
+
+              <!-- divider -->
+              <div class="art-ls-divider"></div>
+
+              <!-- Hard Skills -->
+              <div class="art-hard-skills p-30-15">
+                {% for skill in hard_skills %}
+                  <!-- skill -->
+                  <div class="art-hard-skills-item">
+                    <div class="art-skill-heading">
+                      <!-- title -->
+                      <h6>{{ skill.skill_name }}</h6>
+                    </div>
+                    <!-- progressbar frame -->
+                    <div class="art-line-progress">
+                      <!-- progressbar -->
+                      <div id="lineprog{{ forloop.counter }}"></div>
+                    </div>
+                    <!-- progressbar frame end -->
+                  </div>
+                  <!-- skill end -->
+                {% endfor %}
+              </div>
+              <!-- Hard Skills End -->
+
+              <!-- divider -->
+              <div class="art-ls-divider"></div>
+
+              <!-- knowledge list -->
+              <ul class="art-knowledge-list p-15-0">
+                {% for item in knowledge_items %}
+                  <li>{{ item.name }}</li>
+                {% endfor %}
+              </ul>
+              <!-- knowledge list end -->
+
+              <!-- divider -->
+              <div class="art-ls-divider"></div>
+
+              <!-- links frame -->
+              <div class="art-links-frame p-15-15">
+                {% if personal_info.cv_file %}
+                  <!-- download cv button -->
+                  <a href="{{ personal_info.cv_file.url }}" class="art-link" download>Download CV <i class="fas fa-download"></i></a>
+                {% else %}
+                  <p>CV not available.</p>
+                {% endif %}
+              </div>
+              <!-- links frame end -->
+
+            </div>
+            <!-- scroll frame end -->
+
+            <!-- Sidebar Social -->
+            <div class="art-ls-social">
+              {% if personal_info.facebook %}
+                <a href="{{ personal_info.facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+              {% endif %}
+              {% if personal_info.linkedin %}
+                <a href="{{ personal_info.linkedin }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+              {% endif %}
+              {% if personal_info.github %}
+                <a href="{{ personal_info.github }}" target="_blank"><i class="fab fa-github"></i></a>
+              {% endif %}
+              {% if personal_info.kaggle %}
+                <a href="{{ personal_info.kaggle }}" target="_blank"><i class="fab fa-kaggle"></i></a>
+              {% endif %}
+              {% if personal_info.stack_overflow %}
+                <a href="{{ personal_info.stack_overflow }}" target="_blank"><i class="fab fa-stack-overflow"></i></a>
+              {% endif %}
+              {% if personal_info.quora %}
+                <a href="{{ personal_info.quora }}" target="_blank"><i class="fab fa-quora"></i></a>
+              {% endif %}
+              {% if personal_info.hackerrank %}
+                <a href="{{ personal_info.hackerrank }}" target="_blank"><i class="fab fa-hackerrank"></i></a>
+              {% endif %}
+              {% if personal_info.youtube %}
+                <a href="{{ personal_info.youtube }}" target="_blank"><i class="fab fa-youtube"></i></a>
+              {% endif %}
+              {% if personal_info.twitter %}
+                <a href="{{ personal_info.twitter }}" target="_blank"><i class="fab fa-twitter"></i></a>
+              {% endif %}
+            </div>
+
+            <!-- sidebar social end -->
+
+            <!-- sidebar social end -->
+
+          </div>
+          <!-- menu bar frame end -->
+
+        </div>
+        <!-- info bar end -->
+
+        <!-- content -->
+        <div class="art-content">
+
+          <!-- curtain -->
+          <div class="art-curtain"></div>
+
+          <!-- top background -->
+          <div class="art-top-bg" style="background-image: url('{% static "img/bg.jpg" %}')">
+            <!-- overlay -->
+            <div class="art-top-bg-overlay"></div>
+            <!-- overlay end -->
+          </div>
+          <!-- top background end -->
+
+          <!-- swup container -->
+          <div class="transition-fade" id="swup">
+
+            <!-- scroll frame -->
+            <div id="scrollbar" class="art-scroll-frame">
+
+              {% block main-content %} 
+
+                
+        
+              {% endblock main-content %}
+
+
+              <!-- container -->
+    <div class="container-fluid">
+
+      <!-- row -->
+      <div class="row">
+
+        <!-- col -->
+        <div class="col-6 col-lg-3">
+          <!-- brand -->
+          <img class="art-brand" src="{% static 'img/brands/Google Cloud.png' %}" alt="brand">
+        </div>
+        <!-- col end -->
+
+        <!-- col -->
+        <div class="col-6 col-lg-3">
+          <!-- brand -->
+          <img class="art-brand" src="{% static 'img/brands/AWS.png' %}" alt="brand">
+        </div>
+        <!-- col end -->
+
+        <!-- col -->
+        <div class="col-6 col-lg-3">
+          <!-- brand -->
+          <img class="art-brand" src="{% static 'img/brands/Azure.png' %}" alt="brand">
+        </div>
+        <!-- col end -->
+
+        <!-- col -->
+        <div class="col-6 col-lg-3">
+          <!-- brand -->
+          <img class="art-brand" src="{% static 'img/brands/PyTorch.png' %}" alt="brand">
+        </div>
+        <!-- col end -->
+
+      </div>
+      <!-- row end -->
+
+    </div>
+    <!-- container end -->
+
+
+              <!-- container -->
+              <div class="container-fluid">
+
+                <!-- footer -->
+                <footer>
+                  <!-- copyright -->
+                  <div>© 2025 All Rights Reserved</div>
+                  <!-- author ( Please! Do not delete it. You are awesome! :) -->
+                  <div><a href="https://github.com/mdnuruzzamanKALLOL" target="_blank">Md Nuruzzaman</a></div>
+                </footer>
+                <!-- footer end -->
+
+              </div>
+              <!-- container end -->
+
+            </div>
+            <!-- scroll frame end -->
+
+          </div>
+          <!-- swup container end -->
+
+        </div>
+        <!-- content end -->
+
+        <!-- menu bar -->
+        <div class="art-menu-bar">
+
+          <!-- menu bar frame -->
+          <div class="art-menu-bar-frame">
+
+            <!-- menu bar header -->
+            <div class="art-menu-bar-header">
+              <!-- menu bar button -->
+              <a class="art-menu-bar-btn" href="#.">
+                <!-- icon -->
+                <span></span>
+              </a>
+              <!-- menu bar button end -->
+            </div>
+            <!-- menu bar header end -->
+
+            <!-- current page title -->
+            <div class="art-current-page"></div>
+            <!-- current page title end -->
+
+            <!-- scroll frame -->
+            <div class="art-scroll-frame">
+
+              <!-- menu -->
+              <nav id="swupMenu">
+                <!-- menu list -->
+                <ul class="main-menu">
+                  <li class="menu-item {% if request.resolver_match.url_name == 'home' %}current-menu-item{% endif %}">
+                    <a href="{% url 'home' %}">Home</a>
+                  </li>
+                  <li class="menu-item {% if request.resolver_match.url_name == 'contact' %}current-menu-item{% endif %}">
+                    <a href="{% url 'contact' %}">Contact</a>
+                  </li>
+                  <li class="menu-item {% if request.resolver_match.url_name == 'history' %}current-menu-item{% endif %}">
+                    <a href="{% url 'history' %}">History</a>
+                  </li>
+                  <li class="menu-item {% if request.resolver_match.url_name == 'achievement' %}current-menu-item{% endif %}">
+                    <a href="{% url 'achievement' %}">Achievement</a>
+                  </li>
+                  <li class="menu-item {% if request.resolver_match.url_name == 'project' %}current-menu-item{% endif %}">
+                    <a href="{% url 'project' %}">Project</a>
+                  </li>
+                  <li class="menu-item {% if request.resolver_match.url_name == 'publication' %}current-menu-item{% endif %}">
+                    <a href="{% url 'publication' %}">Publication</a>
+                  </li>
+                  <li class="menu-item {% if request.resolver_match.url_name == 'blog' %}current-menu-item{% endif %}">
+                    <a href="{% url 'blog' %}">Blog</a>
+                  </li>
+                </ul>
+                <!-- menu list end -->
+              </nav>
+              
+              <!-- menu end -->
+
+              <!-- language change -->
+              <ul class="art-language-change">
+                <!-- language item -->
+                <li class="art-active-lang"><a href="#.">en</a></li>
+                <!-- language item -->
+                <li><a href="#.">bn</a></li>
+                <!-- language item -->
+                <li><a href="#.">es</a></li>
+              </ul>
+              <!-- language change end -->
+
+            </div>
+            <!-- scroll frame end -->
+
+          </div>
+          <!-- menu bar frame -->
+
+        </div>
+        <!-- menu bar end -->
+
+      </div>
+      <!-- app container end -->
+
+    </div>
+    <!-- app wrapper end -->
+
+    <!-- preloader -->
+    <div class="art-preloader">
+      <!-- preloader content -->
+      <div class="art-preloader-content">
+        <!-- title -->
+        <h4>Artur Carter</h4>
+        <!-- progressbar -->
+        <div id="preloader" class="art-preloader-load"></div>
+      </div>
+      <!-- preloader content end -->
+    </div>
+    <!-- preloader end -->
+
+  </div>
+  <!-- app end -->
+
+  <!-- jquery js -->
+  <script src="{% static 'js/plugins/jquery.min.js' %}"></script>
+  <!-- anime js -->
+  <script src="{% static 'js/plugins/anime.min.js' %}"></script>
+  <!-- swiper js -->
+  <script src="{% static 'js/plugins/swiper.min.js' %}"></script>
+  <!-- progressbar js -->
+  <script src="{% static 'js/plugins/progressbar.min.js' %}"></script>
+  <!-- smooth scrollbar js -->
+  <script src="{% static 'js/plugins/smooth-scrollbar.min.js' %}"></script>
+  <!-- overscroll js -->
+  <script src="{% static 'js/plugins/overscroll.min.js' %}"></script>
+  <!-- typing js -->
+  <script src="{% static 'js/plugins/typing.min.js' %}"></script>
+  <!-- isotope js -->
+  <script src="{% static 'js/plugins/isotope.min.js' %}"></script>
+  <!-- fancybox js -->
+  <script src="{% static 'js/plugins/fancybox.min.js' %}"></script>
+  <!-- swup js -->
+  <script src="{% static 'js/plugins/swup.min.js' %}"></script>
+
+  <!-- main js -->
+  <script src="{% static 'js/main.js' %}"></script>
+
+  <script>
+    // Language skills
+  const languageSkills = [
+  {% for skill in language_skills %}
+    { id: 'circleprog{{ forloop.counter }}', progress: {{ skill.progress }} },
+  {% endfor %}
+];
+
+languageSkills.forEach(skill => {
+  const bar = new ProgressBar.Circle(document.getElementById(skill.id), {
+    strokeWidth: 7,
+    easing: 'easeInOut',
+    duration: 1400,
+    trailWidth: 7,
+    step: function(state, circle) {
+      const value = Math.round(circle.value() * 100);
+      circle.setText(value === 0 ? '' : value);
+    },
+  });
+  bar.animate(skill.progress);
+});
+
+// Hard skills
+const hardSkills = [
+  {% for skill in hard_skills %}
+    { id: 'lineprog{{ forloop.counter }}', progress: {{ skill.progress }} },
+  {% endfor %}
+];
+
+hardSkills.forEach(skill => {
+  const bar = new ProgressBar.Line(document.getElementById(skill.id), {
+    strokeWidth: 1.72,
+    easing: 'easeInOut',
+    duration: 1400,
+    trailWidth: 1.72,
+    svgStyle: {
+      width: '100%',
+      height: '100%',
+    },
+    step: (state, bar) => {
+      bar.setText(Math.round(bar.value() * 100) + ' %');
+    },
+  });
+  bar.animate(skill.progress);
+});
+  </script>
+
+</body>
+
+</html>
